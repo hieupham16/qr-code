@@ -36,7 +36,7 @@ function BackgroundMusic() {
 
 function Home() {
   const [text, setText] = useState("Anh yêu em rất nhiều");
-  const [link, setLink] = useState("");
+  const [qrData, setQrData] = useState(null);
 
   const generateQR = () => {
     const encoded = encodeURIComponent(text);
@@ -44,7 +44,7 @@ function Home() {
       ? "http://localhost:5173"
       : "https://qr-code-iota-rouge.vercel.app";
     const url = `${baseUrl}/love?text=${encoded}`;
-    setLink(url);
+    setQrData(url);
   };
 
   const downloadQR = () => {
@@ -78,24 +78,28 @@ function Home() {
           onChange={(e) => setText(e.target.value)}
           placeholder="Nhập lời yêu thương..."
         />
-        <button
-          onClick={generateQR}
-          className="bg-gradient-to-r from-pink-500 to-rose-400 text-white py-3 rounded-full font-semibold shadow-md hover:scale-105 transition transform duration-300"
-        >
-          ❤️ Tạo mã QR ngay
-        </button>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <button
+            onClick={generateQR}
+            className="flex-1 bg-gradient-to-r from-pink-500 to-rose-400 text-white py-3 rounded-full font-semibold shadow-md hover:scale-105 transition transform duration-300"
+          >
+            ❤️ Tạo mã QR ngay
+          </button>
+          {qrData && (
+            <button
+              onClick={downloadQR}
+              className="flex-1 bg-gradient-to-r from-blue-500 to-blue-400 text-white py-3 rounded-full font-semibold shadow-md hover:scale-105 transition transform duration-300 flex items-center justify-center gap-2"
+            >
+              <span>💾</span> Tải QR về máy
+            </button>
+          )}
+        </div>
       </div>
 
-      {link && (
+      {qrData && (
         <div className="z-10 mt-10 flex flex-col items-center gap-4 animate-fade-in">
-          <QRCodeCanvas value={link} size={220} className="shadow-lg rounded-lg" />
-          <p className="text-blue-700 text-center break-words text-sm max-w-xs underline">{link}</p>
-          <button
-            onClick={downloadQR}
-            className="bg-gradient-to-r from-blue-500 to-blue-400 text-white py-2 px-6 rounded-full text-sm font-semibold shadow-md hover:scale-105 transition transform duration-300 flex items-center gap-2"
-          >
-            <span>💾</span> Tải mã QR về máy
-          </button>
+          <QRCodeCanvas value={qrData} size={220} className="shadow-lg rounded-lg" />
+          <p className="text-blue-700 text-center break-words text-sm max-w-xs underline">{qrData}</p>
         </div>
       )}
     </div>
