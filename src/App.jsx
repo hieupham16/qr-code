@@ -42,7 +42,7 @@ function Home() {
     const encoded = encodeURIComponent(text);
     const baseUrl = window.location.hostname === "localhost" 
       ? "http://localhost:5173"
-      : "https://vite-react-trunghieudev.vercel.app"; // URL từ Vercel của bạn
+      : window.location.origin;
     const url = `${baseUrl}/love?text=${encoded}`;
     setLink(url);
   };
