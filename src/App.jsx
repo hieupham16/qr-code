@@ -47,6 +47,21 @@ function Home() {
     setLink(url);
   };
 
+  const downloadQR = () => {
+    const canvas = document.querySelector("canvas");
+    if (canvas) {
+      const pngUrl = canvas
+        .toDataURL("image/png")
+        .replace("image/png", "image/octet-stream");
+      const downloadLink = document.createElement("a");
+      downloadLink.href = pngUrl;
+      downloadLink.download = "love-qr-code.png";
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    }
+  };
+
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-pink-200 to-rose-300 font-dancing flex flex-col items-center justify-center px-6 py-10">
       <BackgroundMusic />
@@ -75,6 +90,12 @@ function Home() {
         <div className="z-10 mt-10 flex flex-col items-center gap-4 animate-fade-in">
           <QRCodeCanvas value={link} size={220} className="shadow-lg rounded-lg" />
           <p className="text-blue-700 text-center break-words text-sm max-w-xs underline">{link}</p>
+          <button
+            onClick={downloadQR}
+            className="bg-gradient-to-r from-blue-500 to-blue-400 text-white py-2 px-6 rounded-full text-sm font-semibold shadow-md hover:scale-105 transition transform duration-300 flex items-center gap-2"
+          >
+            <span>💾</span> Tải mã QR về máy
+          </button>
         </div>
       )}
     </div>
