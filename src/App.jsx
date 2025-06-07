@@ -42,7 +42,7 @@ function Home() {
     const encoded = encodeURIComponent(text);
     const baseUrl = window.location.hostname === "localhost" 
       ? "http://localhost:5173"
-      : window.location.origin;
+      : "https://qr-code-iota-rouge.vercel.app";
     const url = `${baseUrl}/love?text=${encoded}`;
     setLink(url);
   };
